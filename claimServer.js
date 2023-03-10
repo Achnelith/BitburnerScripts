@@ -63,7 +63,7 @@ function startBasicNullsec(ns, targetName) {
     }
 
     if(ns.exec("basicNullSec.js", targetName, threads, targetName) > 0){
-      ns.tprint("Stacking paper on " + targetName);
+      ns.tprint("Stacking paper on " + targetName + " (" + threads + " threads, " + (available - selfCost) + " RAM used)");
     }
     else{
       ns.tprint("Failed to start basicNullSec on " + targetName);
@@ -82,7 +82,7 @@ export function root (ns, targetObj, exes) {
     };
   
     if ( targetObj.portsRequired > exes.length) {
-      ns.tprint("Not enough tools to nuke " + targetObj);
+      ns.tprint("Not enough tools to nuke " + targetObj.name);
       return;
     };
   
@@ -112,13 +112,15 @@ export function root (ns, targetObj, exes) {
     let exes = ["BruteSSH", "FTPCrack", "relaySMTP", "SQLInject", "HTTPWorm"];
     for (let i = 0; i <= exes.length - 1; i++)
     {
-      if (!ns.fileExists(exes + ".exe"))
+      if (!ns.fileExists(exes[i] + ".exe"))
       {
         exes.splice(i, 1);
         i--;
       }
     }
-  
+
+    ns.tprint("Available tools: ", exes);
+
     return exes;
   }
   
