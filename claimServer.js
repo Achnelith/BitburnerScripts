@@ -27,6 +27,7 @@
      
     if(pid == 0) {
       ns.tprint("Failed to copy core scripts.");
+      return;
     }
 
     while (ns.isRunning(pid, targetName)) {
