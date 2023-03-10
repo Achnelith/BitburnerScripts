@@ -6,7 +6,7 @@ export async function main(ns) {
     var pid = ns.run("claimServer.js", 1, n);
      
     if(pid == 0) {
-      ns.tprint("Failed to copy core scripts.");
+      ns.tprint("Failed to start on " + n);
       return;
     }
   });
