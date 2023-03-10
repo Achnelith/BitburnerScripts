@@ -4,3 +4,4 @@
 
 Collection of scripts for tinkering with in Bitburner.
 
+claimServer.js is the main entry point.
