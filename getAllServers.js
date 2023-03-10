@@ -44,6 +44,21 @@ function dfs(ns, nodes, node, purchasedServers, removePurchased, depth) {
  * @param {{depth:number, node:string}[]} nodes
  **/
 function prettyPrintServers(ns, nodes) {
-    //TODO
-	ns.tprint(nodes);
+	//ns.tprint(nodes);
+	ns.tprint('|', '='.repeat(100), '|');
+	nodes.forEach(n => {
+		printServerLine(ns, n);
+	});
+	ns.tprint('|', '='.repeat(100), '|');
+}
+
+/**
+ * @param {NS} ns
+ * @param {{depth:number, node:string}} node
+ **/
+function printServerLine(ns, node) {
+	let line = "|";
+	line += "|" + "-".repeat(node.depth * 5);
+	line += node.node;
+	ns.tprint(line);
 }
