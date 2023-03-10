@@ -20,10 +20,20 @@
     }
 
     ns.tprint("Sudo aquired!");
-    ns.tprint("Copying core scripts . . .");
 
     //Copy core scripts to target
-    ns.run("propagate.js", 1, targetName);
+    ns.tprint("Copying core scripts . . .");
+    var pid = ns.run("propagate.js", 1, targetName);
+     
+    if(pid == 0) {
+      ns.tprint("Failed to copy core scripts.");
+    }
+
+    while (ns.isRunning(pid, targetName)) {
+      await ns.sleep(100);
+    }
+
+    ns.tprint("Core scripts copied.");
 
     //Start nullsec with max threads
     startBasicNullsec(ns, targetName);
@@ -34,17 +44,22 @@
  * @param {string} targetName
  **/
 function startBasicNullsec(ns, targetName) {
-    ns.killall(targetName);
+    ns.killall(targetName, true);
+    let selfCost = 5.5;
     let cost = ns.getScriptRam("basicNullSec.js", targetName);
     let max = ns.getServerMaxRam(targetName);
     let used = ns.getServerUsedRam(targetName);
+    let available = max - used;
+    let threads = Math.floor((available - selfCost) / cost);
 
-    let threads = Math.floor(((max - used) - 5.2) / cost);
-
-    ns.tprint(" " + cost + " " + max + " " + used + " " + threads);
+    if(cost == 0){
+      ns.tprint("basicNullSec.js not found on " + targetName);
+      return;
+    }
 
     if(threads < 1) {
-      ns.tprint("Not enough RAM to propagate on " + targetName);
+      ns.tprint("Not enough RAM to propagate on " + targetName + " (" + available + " available, " + (selfCost + cost) + " min)" );
+      return;
     }
 
     if(ns.exec("basicNullSec.js", targetName, threads, targetName) > 0){
