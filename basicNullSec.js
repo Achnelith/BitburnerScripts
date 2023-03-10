@@ -3,13 +3,12 @@
  * @param {string} hostName
  * **/
 export async function main(ns) {
-    if (targetName === undefined) {
+	var hostName = ns.args[0];
+
+	if (hostName === undefined) {
         ns.tprint("Missing server name. Usage: `run basicNullSec.js n00dles`");
         ns.exit();
-        return;
     };
-
-	var hostName = ns.args[0];
 
 	while(true){
 		var currentSecLevel = await ns.getServerSecurityLevel(hostName);
