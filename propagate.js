@@ -10,13 +10,9 @@ export async function main(ns) {
     };
 
 	//Copy all three basic scripts to the target
-	var result = ns.scp(["claimServer.js", "basicNullSec.js", "propagate.js"], target, ns.getCurrentServer);
+	var result = ns.scp(["claimServer.js", "basicNullSec.js", "propagate.js"], target);
 	if(!result){
 		ns.tprint("Failed to copy files!");
 		ns.exit();
 	}
-
-	//move context to the new server
-	var server = ns.getServer(target);
-
 }
