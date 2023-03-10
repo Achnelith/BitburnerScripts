@@ -5,4 +5,5 @@
 Collection of scripts for tinkering with in Bitburner.
 
 claimServer.js is the main entry point.
-  claimServer.js -> propagate.js -> basicNullSec.js on target with enough RAM remaining to run claimServer.js
+
+>claimServer.js &rarr; propagate.js &rarr; basicNullSec.js on target with enough RAM remaining to run claimServer.js
